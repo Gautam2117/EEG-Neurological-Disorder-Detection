@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parkinson's Disease Detection</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .container {
+            margin-top: 50px;
+            max-width: 600px;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 24px;
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .form-label {
+            font-weight: bold;
+            color: #555;
+        }
+
+        .form-control {
+            border-radius: 4px;
+        }
+
+        .btn-primary {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 4px;
+            background-color: #007bff;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+
+        #result {
+            margin-top: 20px;
+            font-size: 18px;
+            text-align: center;
+            color: #333;
+        }
+
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Upload Speech Features for Parkinson's Disease Detection</h1>
+        <form id="uploadForm">
+            <div class="mb-3">
+                <label for="features" class="form-label">Enter Features (comma-separated):</label>
+                <input type="text" id="features" name="features" class="form-control" required>
+            </div>
+            <button type="button" class="btn btn-primary" onclick="submitFeatures()">Submit</button>
+        </form>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        function submitFeatures() {
+            const features = document.getElementById('features').value.split(',').map(Number);
+            fetch('/detection/predict/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                body: JSON.stringify({ features: features })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('result').innerText = data.prediction ? "Positive for Parkinson's Disease" : "Negative for Parkinson's Disease";
+                })
+                .catch(error => console.error('Error:', error));
+        }
+    </script>
+</body>
+
+</html>
