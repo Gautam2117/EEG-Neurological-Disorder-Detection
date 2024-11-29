@@ -1,4 +1,4 @@
-# **EEG-Based Early Detection of Neurological Disorders**
+# **MRI-Based Early Detection of Neurological Disorders**
 
 ## **Abstract**
 This repository contains research and code for the early detection of neurological disorders such as Alzheimer's and Parkinson's disease using EEG data and advanced machine learning techniques. Our models leverage the InceptionV3 architecture combined with LSTM layers for Alzheimer's detection, achieving remarkable accuracy. For Parkinson's, we evaluated multiple machine learning classifiers, identifying K-Nearest Neighbors (KNN) as the most effective model.
